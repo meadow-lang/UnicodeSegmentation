@@ -1,7 +1,7 @@
 # unicodeSegmentation
 
 Split text into grapheme clusters, words and sentences, for
-[Meadow](https://github.com/mcdearman/meadow).
+[Meadow](https://github.com/meadow-lang/meadow).
 
 This package is a port of Rust's
 [`unicode-segmentation`](https://github.com/unicode-rs/unicode-segmentation)
@@ -13,7 +13,7 @@ cursor, truncating a label, reversing a string, or counting words.
 ## Install
 
 ```sh
-meadow add mcdearman/UnicodeSegmentation
+meadow add meadow-lang/UnicodeSegmentation
 ```
 
 ## Use
