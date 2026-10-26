@@ -43,22 +43,14 @@ def pSpPlus = 9
 def pSTerm = 10
 
 fun partOf c =
-  if c == scCR
-  then pCR
-  else if c == scLF
-  then pLF
-  else if c == scSep
-  then pSep
-  else if c == scATerm
-  then pATerm
-  else if c == scUpper or c == scLower
-  then pUpperLower
-  else if c == scClose
-  then pClosePlus
-  else if c == scSp
-  then pSpPlus
-  else if c == scSTerm
-  then pSTerm
+  if c == scCR then pCR
+  else if c == scLF then pLF
+  else if c == scSep then pSep
+  else if c == scATerm then pATerm
+  else if c == scUpper or c == scLower then pUpperLower
+  else if c == scClose then pClosePlus
+  else if c == scSp then pSpPlus
+  else if c == scSTerm then pSTerm
   else pOther
 
 -- The state is the last four parts, oldest first.
@@ -67,8 +59,7 @@ def initial = (pSot, pSot, pSot, pSot)
 fun advance state c =
   match state with
   | (p0, p1, p2, p3) ->
-      if (p3 == pClosePlus and c == scClose) or (p3 == pSpPlus and c == scSp)
-      then state
+      if (p3 == pClosePlus and c == scClose) or (p3 == pSpPlus and c == scSp) then state
       else (p1, p2, p3, partOf c)
 
 fun part state k =
@@ -89,14 +80,12 @@ fun beforeSpClose state =
 -- SB8: an ATerm, then closers and spaces, then no letter of any case before a
 -- lower-case one, is not a boundary.
 fun lowerAhead t i =
-  if i >= count t
-  then False
+  if i >= count t then False
   else
     let c = sentenceCat (codeAt t i) in
-    if c == scLower
-    then True
-    else if c == scOLetter or c == scUpper or isBreakLike c or c == scSTerm or c == scATerm
-    then False
+    if c == scLower then True
+    else if c == scOLetter or c == scUpper or isBreakLike c or c == scSTerm or c == scATerm then
+      False
     else lowerAhead t (i + 1)
 
 fun matchSb8 state t i = part state (beforeSpClose state) == pATerm and lowerAhead t i
@@ -115,33 +104,21 @@ fun matchSb11 state =
 -- What character `i`, of category `c`, does: `1` a boundary before it, `0`
 -- none, `2` none and it leaves the state as it was (SB5).
 fun decide before c t i =
-  if last before == pSot
-  then 1
-  else if c == scLF and last before == pCR
-  then 0
-  else if last before == pSep or last before == pCR or last before == pLF
-  then 1
-  else if c == scExtend or c == scFormat
-  then 2
-  else if c == scNumeric and last before == pATerm
-  then 0
-  else if c == scUpper and part before 2 == pUpperLower and last before == pATerm
-  then 0
-  else if matchSb8 before t i
-  then 0
-  else if (c == scSContinue or c == scSTerm or c == scATerm) and matchSb8a before
-  then 0
-  else if (c == scClose or c == scSp or isBreakLike c) and matchSb9 before
-  then 0
-  else if (c == scSp or isBreakLike c) and matchSb8a before
-  then 0
-  else if matchSb11 before
-  then 1
+  if last before == pSot then 1
+  else if c == scLF and last before == pCR then 0
+  else if last before == pSep or last before == pCR or last before == pLF then 1
+  else if c == scExtend or c == scFormat then 2
+  else if c == scNumeric and last before == pATerm then 0
+  else if c == scUpper and part before 2 == pUpperLower and last before == pATerm then 0
+  else if matchSb8 before t i then 0
+  else if (c == scSContinue or c == scSTerm or c == scATerm) and matchSb8a before then 0
+  else if (c == scClose or c == scSp or isBreakLike c) and matchSb9 before then 0
+  else if (c == scSp or isBreakLike c) and matchSb8a before then 0
+  else if matchSb11 before then 1
   else 0
 
 fun breaksFrom t i state out =
-  if i >= count t
-  then (if last state == pSot or last state == pEot then out else V.pushBack out i)
+  if i >= count t then (if last state == pSot or last state == pEot then out else V.pushBack out i)
   else
     let c = sentenceCat (codeAt t i) in
     let d = decide state c t i in

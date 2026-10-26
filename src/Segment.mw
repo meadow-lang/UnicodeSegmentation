@@ -67,18 +67,14 @@ fun seekBack t extended i =
 @pub fun splitWordBounds s = strip (splitWordBoundIndices s)
 
 -- The same, each with the byte offset it starts at.
-@pub fun splitWordBoundIndices s =
-  let t = text s in
-  piecesWithOffsets t (wordBoundEnds t)
+@pub fun splitWordBoundIndices s = let t = text s in piecesWithOffsets t (wordBoundEnds t)
 
 -- The words of `s`: the pieces between word boundaries that have a letter or a
 -- number in them.
 @pub fun unicodeWords s = strip (unicodeWordIndices s)
 
 -- The same, each with the byte offset it starts at.
-@pub fun unicodeWordIndices s =
-  let t = text s in
-  spanPieces t (wordSpans t)
+@pub fun unicodeWordIndices s = let t = text s in spanPieces t (wordSpans t)
 
 -- --- sentences --------------------------------------------------------------------------
 
@@ -87,9 +83,7 @@ fun seekBack t extended i =
 @pub fun splitSentenceBounds s = strip (splitSentenceBoundIndices s)
 
 -- The same, each with the byte offset it starts at.
-@pub fun splitSentenceBoundIndices s =
-  let t = text s in
-  piecesWithOffsets t (sentenceEnds t)
+@pub fun splitSentenceBoundIndices s = let t = text s in piecesWithOffsets t (sentenceEnds t)
 
 fun hasAlphanumeric piece =
   V.any (\c -> isAlphanumeric (charCode c)) (V.fromArray (stringToChars piece))
