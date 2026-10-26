@@ -32,9 +32,7 @@ fun pairUp flat =
   V.map (\k -> (at (2 * k), at (2 * k + 1))) (V.range 0 (V.len flat / 2))
 
 @cfg(test)
-fun endOf p =
-  match p with
-  | (at, piece) -> at + stringByteLength piece
+fun endOf p = match p with | (at, piece) -> at + stringByteLength piece
 
 @cfg(test)
 fun spanOf p =
@@ -42,12 +40,7 @@ fun spanOf p =
   | (at, piece) -> (at, at + stringByteLength piece)
 
 @cfg(test)
-fun slices s pairs =
-  V.map
-    (\p ->
-      match p with
-      | (a, b) -> stringSlice s a b)
-    pairs
+fun slices s pairs = V.map (\p -> match p with | (a, b) -> stringSlice s a b) pairs
 
 -- What this port says of `s`, in the order `Cases.mw` lists it: two triples,
 -- as `Std` compares tuples of up to four.
@@ -69,8 +62,7 @@ fun actual s =
 -- The failures from byte `at` on, as (string, expected, actual).
 @cfg(test)
 fun check at bad =
-  if at >= stringByteLength cases
-  then bad
+  if at >= stringByteLength cases then bad
   else
     let len = field at in
     let s = stringSlice cases (at + 3) (at + 3 + len) in
@@ -80,7 +72,9 @@ fun check at bad =
     let r4 = readList (snd r3) 2 in
     let r5 = readList (snd r4) 1 in
     let r6 = readList (snd r5) 2 in
-    let expected = ((fst r1, fst r2, fst r3), (pairUp (fst r4), fst r5, slices s (pairUp (fst r6)))) in
+    let expected =
+      ((fst r1, fst r2, fst r3), (pairUp (fst r4), fst r5, slices s (pairUp (fst r6))))
+    in
     let got = actual s in
     check (snd r6) (if got == expected then bad else V.pushBack bad (s, expected, got))
 

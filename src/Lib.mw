@@ -25,17 +25,7 @@ mod Cases
 mod Tests
 
 @pub use UnicodeSegmentation.Segment (
-  graphemes,
-  graphemeIndices,
-  isGraphemeBoundary,
-  nextGraphemeBoundary,
-  prevGraphemeBoundary,
-  splitWordBounds,
-  splitWordBoundIndices,
-  unicodeWords,
-  unicodeWordIndices,
-  splitSentenceBounds,
-  splitSentenceBoundIndices,
-  unicodeSentences,
-  unicodeVersion
+  graphemes, graphemeIndices, isGraphemeBoundary, nextGraphemeBoundary, prevGraphemeBoundary,
+  splitWordBounds, splitWordBoundIndices, unicodeWords, unicodeWordIndices, splitSentenceBounds,
+  splitSentenceBoundIndices, unicodeSentences, unicodeVersion
 )

@@ -20,15 +20,12 @@ fun codePoint s i = pair s i * 4096 + pair s (i + 2)
 -- Where the record holding `cp` starts in `table`, whose records are `size`
 -- digits and start with `lo hi`; or `0 - 1` when no record holds it.
 fun searchFrom table size cp lo hi =
-  if lo >= hi
-  then 0 - 1
+  if lo >= hi then 0 - 1
   else
     let mid = (lo + hi) / 2 in
     let at = mid * size in
-    if cp < codePoint table at
-    then searchFrom table size cp lo mid
-    else if cp > codePoint table (at + 4)
-    then searchFrom table size cp (mid + 1) hi
+    if cp < codePoint table at then searchFrom table size cp lo mid
+    else if cp > codePoint table (at + 4) then searchFrom table size cp (mid + 1) hi
     else at
 
 fun search table size cp = searchFrom table size cp 0 (stringByteLength table / size)
